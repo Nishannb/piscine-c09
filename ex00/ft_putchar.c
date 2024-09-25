@@ -1,4 +1,15 @@
-// check whether libft_creator.sh runs with sh libft_creator.sh
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbaral <nbaral@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 16:20:53 by nbaral            #+#    #+#             */
+/*   Updated: 2024/09/25 19:53:34 by nbaral           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 
 void	ft_putchar(char c)

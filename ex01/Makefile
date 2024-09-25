@@ -1,40 +1,55 @@
-SRC			= ft_putchar.c ft_swap.c ft_putstr.c ft_strlen.c ft_strcmp.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nbaral <nbaral@student.42tokyo.jp>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/09/25 19:57:39 by nbaral            #+#    #+#              #
+#    Updated: 2024/09/25 19:57:40 by nbaral           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS		= ${addprefix ${PRE}, ${SRC}}
+#　complie with option
+CC  =  cc 
+CFLAGS = -Wall -Wextra -Werror
 
-OBJS		= ${SRCS:.c=.o}
+# archaive and ranlib function
+AR  =  ar rc 
+RANLIB =  ranlib 
 
-PRE			= ./srcs/
+# source files and objects files and directory
+SRCS = srcs/ft_putchar.c srcs/ft_swap.c srcs/ft_putstr.c srcs/ft_strlen.c srcs/ft_strcmp.c
+OBJS = srcs/ft_putchar.o srcs/ft_swap.o srcs/ft_putstr.o srcs/ft_strlen.o srcs/ft_strcmp.o
+INCDIR = includes
 
-HEAD		= ./includes/
 
-NAME		= libft.a
+# The default target that compiles the libft.a library.
+all: libft.a
 
-AR			= ar rc
+# This rule creates the libft.a library by archiving the object files.
+# It automatically compiles .o files from the .c files if they don't exist.
+libft.a: $(OBJS)
+	$(AR) libft.a $(OBJS)
+	$(RANLIB) libft.a
 
-RM			= rm -f
+# Compile each .c file into its corresponding .o file.
+# %: matches any string (used for pattern matching).
+# $<: the first dependency (source .c file).
+# $@: the target file (.o file to be created).
+# -I: indicate which directory has a header file.
+srcs/%.o: srcs/%.c
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCDIR)
 
-LIB			= ranlib
+# Remove object files.
+clean: 
+	rm -f $(OBJS)
 
-GCC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror
+# Remove object files and the library.
+#fclean = clean + remove libft.a
+fclean: clean
+	rm -f libft.a
 
-all:		${NAME}
-
-.c.o:
-			${GCC} ${CFLAGS} -c -I ${HEAD} $< -o ${<:.c=.o}
-
-${NAME}:	${OBJS}
-			${AR} ${NAME} ${OBJS}
-			${LIB} ${NAME}
-
-clean:
-			rm -f ${OBJS}
-
-fclean:		clean
-			rm -f ${NAME}
-
-re:			fclean all
-
-.PHONY:		all clean fclean re
+# Rebuild everything (remove and then recreate).
+re: fclean all
